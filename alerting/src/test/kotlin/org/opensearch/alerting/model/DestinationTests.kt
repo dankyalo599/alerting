@@ -307,4 +307,15 @@ class DestinationTests : OpenSearchTestCase() {
         val parsedDest = Destination.parse(parser(userString))
         assertNull(parsedDest.user)
     }
+    fun `test email destination with plain text`() {
+        val recipient = Recipient(Recipient.RecipientType.EMAIL, null, "test@email.com")
+        val emailDestination = Email("test@email.com", listOf(recipient), Email.EmailFormat.PLAIN_TEXT)
+        assertTrue("Email is plain text", emailDestination.emailFormat == Email.EmailFormat.PLAIN_TEXT)
+    }
+
+    fun testEmailDestinationWithHTML() {
+        val recipient = Recipient(Recipient.RecipientType.EMAIL, null, "test@email.com")
+        val emailDestination = Email("test@email.com", listOf(recipient), Email.EmailFormat.HTML)
+        assertTrue("Email is not HTML", emailDestination.emailFormat == Email.EmailFormat.HTML)
+    }
 }
